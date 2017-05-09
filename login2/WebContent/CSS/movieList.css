@@ -1,0 +1,39 @@
+.movieTable{
+	margin: 20px;
+}
+
+.row{
+	padding-top: 10px;
+	margin-bottom:10px;
+	padding-bottom: 20px;
+	border-bottom: 0.5px solid 	#989898 ;
+	
+}
+.line{
+	margin: 8px;
+	padding: 5px;
+}
+
+.rightSpace{
+	margin-left:10px;
+}
+
+#firstLine{
+	margin-top: 10px;
+	padding-top:10px;
+}
+
+.bottomMar{
+	margin-bottom: 20px;
+}
+
+
+.blueBkgr {
+	background-color: #a2c4f9;
+	border-radius: 5px;
+	padding: 0px 3px;
+}
+
+.space {
+	padding-right: 3px;
+}
