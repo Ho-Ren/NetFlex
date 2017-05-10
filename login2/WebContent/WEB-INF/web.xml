@@ -35,10 +35,10 @@
     <servlet-class>TomcatForm</servlet-class>
   </servlet>
   <servlet>
-  	<servlet-name>Results</servlet-name>
-  	<display-name>Results</display-name>
-  	<description></description>
-  	<servlet-class>Results</servlet-class>
+    <servlet-name>Results</servlet-name>
+    <display-name>Results</display-name>
+    <description></description>
+    <servlet-class>Results</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Browse</servlet-name>
@@ -53,10 +53,10 @@
     <servlet-class>StarPage</servlet-class>
   </servlet>
    <servlet>
-   	<servlet-name>Checkout</servlet-name>
-   	<display-name>Checkout</display-name>
-   	<description></description>
-   	<servlet-class>Checkout</servlet-class>
+    <servlet-name>Checkout</servlet-name>
+    <display-name>Checkout</display-name>
+    <description></description>
+    <servlet-class>Checkout</servlet-class>
    </servlet>
 
   <servlet-mapping>
@@ -64,24 +64,24 @@
     <url-pattern>/servlet/TomcatForm</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>Results</servlet-name>
-  	<url-pattern>/servlet/Results</url-pattern>
+    <servlet-name>Results</servlet-name>
+    <url-pattern>/servlet/Results</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>Browse</servlet-name>
-  	<url-pattern>/servlet/browseItem</url-pattern>
+    <servlet-name>Browse</servlet-name>
+    <url-pattern>/servlet/browseItem</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>Info</servlet-name>
-  	<url-pattern>/servlet/MoviePage</url-pattern>
+    <servlet-name>Info</servlet-name>
+    <url-pattern>/servlet/MoviePage</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>StarPage</servlet-name>
-  	<url-pattern>/servlet/StarPage</url-pattern>
+    <servlet-name>StarPage</servlet-name>
+    <url-pattern>/servlet/StarPage</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-  	<servlet-name>Checkout</servlet-name>
-  	<url-pattern>/servlet/Checkout</url-pattern>
+    <servlet-name>Checkout</servlet-name>
+    <url-pattern>/servlet/Checkout</url-pattern>
   </servlet-mapping>
   
 

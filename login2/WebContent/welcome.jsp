@@ -33,19 +33,20 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-    <div class="col-sm-6 col-md-6 ">
-     <form class="navbar-form" role="search">
+   <!--  <div class="col-sm-6 col-md-6 ">
+     <form class="navbar-form" role="search" action="/login2/servlet/Results" method="get">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search" name="q">
+            <input type="text" class="form-control" name="Title" placeholder="Enter Movie Title">
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit">Search</button>
             </div>
         </div>
         </form>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">About</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a href="/login2/servlet/Carthandler">Cart</a></li>
+      <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
+      <li><a href="/login2/forTitle.jsp">Title</a></li>
     </ul>
     
   </div>
@@ -66,7 +67,7 @@
   	<div class = "col-md-4 col-sm-6 box">
   	<div>
   	<h2> Title </h2>	
-  	 <a href="/login2/servlet/browseItem?param=title"><h4> Search by Title</h4></a>
+  	 <a href="/login2/forTitle.jsp"><h4> Search by Title</h4></a>
   	</div>
   	</div>	
   	<div class = "col-md-4 col-sm-6 box">

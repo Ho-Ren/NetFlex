@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -40,7 +38,7 @@ public class Checkout extends HttpServlet {
 		 try
          {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
+            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
             
             //Get all information and check if cc info is correct.
             Statement statement = dbcon.createStatement();
@@ -74,11 +72,11 @@ public class Checkout extends HttpServlet {
 	            Calendar calendar = Calendar.getInstance();
 	            java.sql.Date currentDate = new java.sql.Date(calendar.getTime().getTime());
             
-	            //Adds all movies to sales record
+	            //Adds all MovieForCarts to sales record
 	            System.out.println("BEFORE INSERTING SALES");
-	            for(Map.Entry<String, Movie> entry : cart.getMovies().entrySet())
+	            for(Map.Entry<String, MovieForCart> entry : cart.getMovieForCarts().entrySet())
 	            {
-	            	System.out.println("MOVIE_ID: " + entry.getValue().getId());
+	            	System.out.println("MovieForCart_ID: " + entry.getValue().getId());
 	            	int numSales = entry.getValue().getQuantity();
 	            	for(; numSales > 0; numSales--)
 	            	{
@@ -88,6 +86,7 @@ public class Checkout extends HttpServlet {
 	            		sales.execute();
 	            	}
 	            }
+	            cart.emptyCart();
 	            RequestDispatcher rd = request.getRequestDispatcher("/checkoutsuccess.jsp");  
 	            rd.include(request,response);
             }

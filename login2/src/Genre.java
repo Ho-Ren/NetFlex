@@ -10,19 +10,17 @@ public class Genre {
 	}
 	
 	// To compare two Genres:
-	@Override
-	public boolean equals(Object g) {
-		if ((g == null) || !(g instanceof Genre))
-			return false;
-		if (g == this)
-			return true;
-		if (g instanceof Genre) {
-			if (((Genre) g).ID == this.ID)
+	public boolean equals(Genre g) {
+		if ((g != null) && g instanceof Genre) {
+			if (g.ID == this.ID)
 				return true;
-		} 
+			return false;
+		}
+		
 		return false;
 	}
-		public String getID() {
+
+	public String getID() {
 		return ID;
 	}
 

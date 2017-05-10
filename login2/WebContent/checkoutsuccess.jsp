@@ -1,13 +1,28 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="java.io.*" %>
+<%@ page isELIgnored ="false" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Checkout Completed.</title>
-</head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <title>Success</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="../CSS/movieList.css" />
+  
+  
+  </head>
+  
 <body>
-	<div class="navbar-header">
+<nav class="navbar navbar-default" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  <div class="navbar-header">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navitem">
       <span class="sr-only"></span>
       <span class="icon-bar"></span>
@@ -17,6 +32,32 @@
     </button>
     <a class="navbar-brand" href="/login2/welcome.jsp">Home</a>
   </div>
-<H1>Thank you for using NetFlex.</H1>
+
+  <div class="collapse navbar-collapse" id="navitem">
+   <!--  <div class="col-sm-6 col-md-6 ">
+     <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" name="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">Search</button>
+            </div>
+        </div>
+        </form>
+    </div> -->
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login2/servlet/Carthandler">Cart</a></li>
+      <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
+      <li><a href="/login2/forTitle.jsp">Title</a></li>
+      <li><a href="/login2/index.html">Sign Out</a></li>
+    </ul>
+    
+  </div>
+</nav>
+<div class ="container">
+<div class = "text-center"> 
+<h3>Check out Success!</h3>
+<H4>Thank you for using NetFlex, your movie is on your way!</H4>
+</div>
+</div>
 </body>
 </html>

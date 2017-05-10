@@ -1,7 +1,4 @@
-
-/* A servlet to display the contents of the MySQL movieDB database */
-
-import java.io.*;
+import java.io.*; 
 import java.net.*;
 import java.sql.*;
 import java.text.*;
@@ -20,27 +17,21 @@ public class TomcatForm extends HttpServlet
     {
        return "Servlet connects to MySQL database and displays result of a SELECT";
     }
-
     // Use http GET
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException
     {
-        String loginUser = "root";
-        String loginPasswd = "5555";
-        String loginUrl = "jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false";
-        response.setContentType("text/html");    // Response mime type
 
+        response.setContentType("text/html");    // Response mime type
         // Output stream to STDOUT
         PrintWriter out = response.getWriter();
-
-
         try
            {
               //Class.forName("org.gjt.mm.mysql.Driver");
               Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-              Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
+              Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
 //            		  loginUrl, loginUser, loginPasswd);
               // Declare our statement
               Statement statement = dbcon.createStatement();
@@ -63,17 +54,19 @@ public class TomcatForm extends HttpServlet
             
               ResultSet rs = statement.executeQuery(query);
               String name = null;
+              int customerID = 961;
               while (rs.next()){
             	  name = rs.getString("first_name");
+            	  customerID = rs.getInt("id");
               }
-           
+              System.out.println("customer ID:" + customerID);
               HttpSession session = request.getSession(true);
               session.setAttribute("name", name);
               session.setAttribute("username", email);
               session.setAttribute("cartsession", new cart());
+              session.setAttribute("customerID", customerID);
               RequestDispatcher rd=request.getRequestDispatcher("../welcome.jsp");  
               rd.include(request,response);
-             
               rs.close();
            }
               statement.close();
@@ -85,6 +78,7 @@ public class TomcatForm extends HttpServlet
                     System.out.println ("SQL Exception:  " + ex.getMessage ());
                     ex = ex.getNextException ();
                 }  // end while
+              response.sendRedirect("../index.html");
             }  // end catch SQLException
 
         catch(java.lang.Exception ex)
@@ -99,7 +93,7 @@ public class TomcatForm extends HttpServlet
             }
          out.close();
     }
-
+    
     public void doPost(HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException
     {

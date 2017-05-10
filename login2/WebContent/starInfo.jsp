@@ -34,7 +34,7 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-    <div class="col-sm-6 col-md-6 ">
+<!--     <div class="col-sm-6 col-md-6 ">
      <form class="navbar-form" role="search">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
@@ -43,11 +43,12 @@
             </div>
         </div>
         </form>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login2/servlet/Carthandler?&addToCart=null">Cart</a></li>
       <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
       <li><a href="/login2/servlet/browseItem?param=title">Title</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a href="/login2/index.html">Sign Out</a></li>
     </ul>
     
   </div>
@@ -60,6 +61,10 @@
   <img src="${star.photo}" class="img-responsive" width="260" height="310"> 
 </div>
 <div class ="col-md-7 col-sm-6" id ="firstLine">
+   <div class = "line">
+  <h4>Star ID:</h4>
+  <p class = "rightSpace"> ${star.id}</p>
+  </div>
   <div class = "line">
   <h4>DOB:</h4>
   <p class = "rightSpace"> ${star.DOB}</p>

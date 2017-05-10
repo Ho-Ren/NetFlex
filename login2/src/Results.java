@@ -40,9 +40,21 @@ public class Results extends HttpServlet {
         lastname = "";
         
         PrintWriter out = response.getWriter();
-
-//        out.println("<HTML><HEAD><TITLE>MovieDB</TITLE></HEAD>");
-//        out.println("<BODY><H1>Welcome IDJIT</H1>");
+        String order = request.getParameter("order");
+		if (order == null || order.equals("")){
+			order = "asc";
+		}
+		int perPage;
+		if (request.getParameter("perPage") == null || request.getParameter("perPage").equals(""))
+			 perPage = 10;
+		else
+			perPage = Integer.parseInt(request.getParameter("perPage"));
+		
+		String sort = request.getParameter("sort");
+		if (sort == null || sort.equals("")){
+			sort = "title";
+		}
+		
         
         if(request.getParameter("Title") != null && request.getParameter("Director") != null)
         {
@@ -52,54 +64,102 @@ public class Results extends HttpServlet {
     		lastname = request.getParameter("Lastname");
     		firstname = request.getParameter("Firstname");
         }
-		
+        
+		System.out.println("title: " + title +" First: " + firstname + " Last:" + lastname + " Director:" + director);
         try
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
+            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
             Statement statement = dbcon.createStatement();
             System.out.println("this is not working");
-            String query = "SELECT DISTINCT movies.title from movies, stars_in_movies, stars WHERE ";
+            String query = "SELECT * from movies, stars_in_movies, stars WHERE ";
             
-            if(title.compareTo("")!=0)
+            if(!title.equals(""))
             {
                 query+= "movies.title = '" + title + "' AND ";
             }
-            if(year.compareTo("")!=0)
+            if(!year.equals(""))
             {
                 query+= "movies.year = '" + year + "' AND ";
             }
-            if(director.compareTo("")!=0)
+            if(!director.equals(""))
             {
                 query+= "movies.director = '" + director + "' AND ";
             }
             
-            if(firstname.compareTo("")!=0)
+            if(!firstname.equals(""))
             {
                 query+= "stars.first_name= '" + firstname + "' AND ";	
             }
-            if(firstname.compareTo("")!=0)
+            if(!lastname.equals(""))
             {
             	query+= "stars.last_name= '" + lastname + "' AND ";
             }
             
-            query+= "stars.id = stars_in_movies.star_id AND stars_in_movies.movie_id = movies.id;";
-            if(!dbcon.isClosed() || dbcon!=null){
-            	System.out.println("this is not close");
-            }
+            
+            query+= "stars.id = stars_in_movies.star_id AND stars_in_movies.movie_id = movies.id group by movies.title order by " + sort + " " + order;  //+" limit 1, " +perPage
+         
             System.out.println(query);
-            ResultSet re = statement.executeQuery(query);
-            re.last();
-            int count = re.getRow();
-            System.out.println("cuurent count: " + count);
+            System.out.println("perPage" + perPage);
             ResultSet result = statement.executeQuery(query);
-            ArrayList<String> movieList = new ArrayList<String>();
+			result.last();
+			int total = result.getRow();
+			System.out.println("totalRow: " + total);
+			int pageNum = total <= perPage ? 0 :(int)(Math.ceil((double)result.getRow() / perPage));
+			System.out.println("pageNum: " + pageNum);
+
+			// get current page and set limit and offset query is based on the parameter again
+			int offset;
+			System.out.println(request.getParameter("page"));
+			if (request.getParameter("page") == null) {
+				offset = 0;
+			} else {
+				offset = (Integer.parseInt(request.getParameter("page"))-1) * perPage ;
+			}
+			System.out.println("offset: " + offset);
+
+			query +=  " limit " + offset + ", " + perPage;
+            result = statement.executeQuery(query);
+            ArrayList<Movie> movieList = new ArrayList<Movie>();
             while(result.next())
             {	
-            	System.out.println(result.getString(1));
-            	movieList.add(result.getString(1));
+            	int id = result.getInt("id");
+				String title2 = result.getString("title");
+				int year2 = result.getInt("year");
+				String director2 = result.getString("director");
+				String pic = result.getString("banner_url");
+				String url = result.getString("trailer_url");
+				ArrayList<Star> starList = new ArrayList<Star>();
+				ArrayList<String> genreList2 = new ArrayList<String>();
+				
+				String query3 = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = " +id;
+				Statement stmt2 = dbcon.createStatement();
+				ResultSet resultGenre = stmt2.executeQuery(query3);
+				
+				while (resultGenre.next())
+                 {	
+                 	genreList2.add(resultGenre.getString(1));
+                 }
+				// For adding stars, genres to a new Movie() object:
+            	query3 ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id=" + id;
+            	ResultSet resultStar = stmt2.executeQuery(query3);
+            	 while(resultStar.next())
+                 {	
+            		String starid = resultStar.getString(3);
+                 	String fullName = resultStar.getString(1) + " " + resultStar.getString(2);	                 	
+                 	starList.add(new Star(starid, fullName));
+                 }
+
+
+				movieList.add(new Movie(id,title2,year2, director2, pic, url, genreList2, starList));
             }
             request.setAttribute("movieList",movieList);
+            request.setAttribute("Title",title);
+            request.setAttribute("Year",year);
+            request.setAttribute("Director",director);
+            request.setAttribute("Lastname",firstname);
+            request.setAttribute("Firstname",lastname);
+            request.setAttribute("pageNum", pageNum);
             RequestDispatcher rd=request.getRequestDispatcher("../movieList.jsp");  
             rd.include(request,response); 
         }

@@ -35,7 +35,7 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-    <div class="col-sm-6 col-md-6 ">
+<!--     <div class="col-sm-6 col-md-6 ">
      <form class="navbar-form" role="search">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
@@ -44,11 +44,12 @@
             </div>
         </div>
         </form>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login2/servlet/Carthandler">Cart</a></li>
       <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
       <li><a href="/login2/servlet/browseItem?param=title">Title</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a href="/login2/index.html">Sign Out</a></li>
     </ul>
     
   </div>
@@ -61,6 +62,11 @@
   <img src="${item.pic}" class="img-responsive" width="260" height="310"> 
 </div>
 <div class ="col-md-7 col-sm-6" id ="firstLine">
+  <div class = "line">
+  <h4>Movie ID:</h4>
+  <p class = "rightSpace"> ${item.id}</p>
+  </div>
+  
   <div class = "line"> 
   <h4>Genre: </h4>
    <c:forEach items="${genre}" var= "genre">
@@ -87,15 +93,19 @@
   </button></a>
   </div>
   <hr/>
-  <div class = "line">
-  <a href ="#"><button type="button" class="btn btn-info btn-sm">
-  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add To Cart
-  </button></a>
-  <a href ="#"><button type="button" class="btn btn-danger btn-sm">
-  <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Check Out
-  </button></a>
-  </div>
+  
+  <div class ="line">
+    <form id="login-form" class="rightSpace"
+        ACTION="/login2/servlet/Carthandler" METHOD="POST">
+          <input type="hidden" name="moviename" value="${item.title}"/>
+            <button type="submit" class="btn btn-info btn-sm rightSpace" name="addtocart" >Add to Cart</button>
+    </form>
 </div>
+  
+</div>
+</div>
+  
+
 </div>
    
   
@@ -106,9 +116,7 @@
   </div> --%>
   
   
- </div>
 
- </div>
 
 
 

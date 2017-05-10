@@ -34,7 +34,7 @@ public class MoviePage extends HttpServlet{
         try
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
+            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
             Statement statement = dbcon.createStatement();
             System.out.println("this is working");
             

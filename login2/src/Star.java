@@ -14,16 +14,13 @@ public class Star {
 	}
 	
 	// To compare two Stars:
-	@Override
-	public boolean equals(Object s) {
-		if ((s == null) || !(s instanceof Star))
-			return false;
-		if (s == this)
-			return true;
-		if (s instanceof Star) {
-			if (((Star) s).id == this.id)
+	public boolean equals(Star s) {
+		if((s != null) && s instanceof Star) {
+			if (this.id == s.id)
 				return true;
-		} 
+			return false;
+		}
+		
 		return false;
 	}
 	public String getId(){

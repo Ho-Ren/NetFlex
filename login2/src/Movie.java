@@ -14,6 +14,8 @@ public class Movie {
 	private int y;
 	private int id;
 	private int quantity;
+	private String genreString;
+	private String starsString;
 
 	public Movie (String id, String t, String y, String d) {
 		this.ID = id;
@@ -24,9 +26,10 @@ public class Movie {
 		this.stars = new ArrayList<Star>();
 		this.quantity = 1;
 	}
-	
+
 	//I created a new constructor that will store the result from mysql with the format I need
-	 public Movie(int id, String title,int year,  String director, String pic, String trailer){this.title = title;
+	 public Movie(int id, String title,int year,  String director, String pic, String trailer){
+		 	this.title = title;
 			this.id = id;
 			this.pic = pic;
 			this.y = year;
@@ -48,7 +51,22 @@ public class Movie {
 			this.genreList =genreList;
 			this.quantity = 1;
 	}
-	
+	 public Movie (String id, String t, String y, String d, String g, String s) {
+	        this.ID = id;
+	        this.title = t;
+	        this.year = y;
+	        this.director = d;
+	        this.genreString = g;
+	        this.starsString = s;
+	        this.quantity = 1;
+	    }
+	 
+	public String getStarsString(){
+		return starsString;
+	}
+	public String getGenreString(){
+		return genreString;
+	}
 	public ArrayList<Star> getStarList(){
 		return starList;
 	}
@@ -123,21 +141,5 @@ public class Movie {
 		this.quantity = quantity;
 	}
 	
-	
-	@Override 
-	public boolean equals(Object o) {
-		if((o == null) || !(o instanceof Movie))
-			return false;
-		else {
-			if(o instanceof Movie) {
-				if (this == o)
-						return true;
-				else if(((Movie) o).id == this.id)
-					return true;
-			}
-		}
-		
-		return false;
-	}
 	
 }

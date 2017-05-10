@@ -2,36 +2,39 @@ import java.util.HashMap;
 
 public class cart {
 	
-	private HashMap<String, Movie> cart;
+	public static HashMap<String, MovieForCart> cart;
 	
 	public cart()
 	{
-		cart = new HashMap<String, Movie>();
+		cart = new HashMap<String, MovieForCart>();
 	}
 	
-	public HashMap<String, Movie> getMovies()
+	public static HashMap<String, MovieForCart> getMovieForCarts()
 	{
 		return cart;
 	}
 	
-	public Movie addToCart(Movie m)
+	public MovieForCart addToCart(MovieForCart m)
 	{
 		if(cart.containsKey(m.getTitle()))
 		{
-			Movie item = cart.get(m.getTitle());
-			item.setQuantity(item.getQuantity() + 1);
-			return item;
+			System.out.println("addTocart containsKey (Title)");
+			return m;
 		}
 		else
 		{
 			cart.put(m.getTitle(), m);
+			System.out.println("addTocart not containsKey (title)");
+
 			return m;
 		}
 	}
 	
-	public void updateQuantity(Movie m, int quantity)
+	public void updateQuantity(MovieForCart m, int quantity)
 	{
 		cart.get(m.getTitle()).setQuantity(quantity);
+		System.out.println("addTocart setQuantity");
+
 	}
 	
 	public void emptyCart()
@@ -39,7 +42,7 @@ public class cart {
 		cart.clear();
 	}
 	
-	public void deleteFromCart(Movie m)
+	public void deleteFromCart(MovieForCart m)
 	{
 		cart.remove(m.getTitle());
 	}

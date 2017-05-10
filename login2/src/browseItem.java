@@ -33,6 +33,7 @@ public class browseItem extends HttpServlet {
 		// TODO Auto-generated method stub
 		String type = request.getParameter("param");
 		String genreName = request.getParameter("genreName");
+		String alpha = request.getParameter("alpha");
 		int perPage;
 		String order = request.getParameter("order");
 		if (order == null){
@@ -57,7 +58,7 @@ public class browseItem extends HttpServlet {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
+			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
 			Statement statement = dbcon.createStatement();
 			String query;
 			System.out.println("this is working(connection)");
@@ -86,36 +87,34 @@ public class browseItem extends HttpServlet {
 					}
 				else{
 					//create query for browse by title to get number of pages for pagination
-					query = "select * from movies order by title asc";
+					query = "select * from movies where movies.title LIKE '"+alpha +"%'";
 					value ="title";
 					}
 				// get number of rows in the list
 				ResultSet result = statement.executeQuery(query);
 				result.last();
 				int total = result.getRow();
-
-				pageNum = (total == 0 ? 0 : result.getRow() / perPage);
+				System.out.println("total page: " + total);
+				pageNum = (total <= perPage ? 0 : (int)(Math.ceil((double)result.getRow() / perPage)));
 				System.out.println("pageNum: " + pageNum);
 
 				// get current page and set limit and offset query is based on the parameter again
 				int offset;
 				System.out.println(request.getParameter("page"));
 				if (request.getParameter("page") == null) {
-					offset = 1;
+					offset = 0;
 				} else {
-					offset = Integer.parseInt(request.getParameter("page")) * perPage + 1;
+					offset = (Integer.parseInt(request.getParameter("page"))-1) * perPage;
 				}
 
 				System.out.println("page: " + offset);
 				if (genreName != null){   //create query for browse by genre
-					query = "select * from stars_in_movies " +  
-							" inner join movies on stars_in_movies.movie_id = movies.id inner join stars on stars_in_movies.star_id = stars.id inner join genres_in_movies on movies.id = genres_in_movies.movie_id " +
-							"inner join genres on genres_in_movies.genre_id = genres.id and genres_in_movies.genre_id = (" +
-							"select id from genres where name =  '" + genreName +"') group by movies.title ORDER BY " + sort + " " + order + " limit " + offset + ", " + perPage;
-					System.out.print("i am here5");
+					query = "select * from movies inner join " +  
+							"genres_in_movies where movies.id =  genres_in_movies.movie_id and genres_in_movies.genre_id = (select id from genres where genres.name = '" + genreName +"') order by " 
+							 + sort + " " + order + " limit " + offset + ", " + perPage;
 				}          
 				else                     //create query for browse by title
-					query = "select * from stars_in_movies inner join movies on stars_in_movies.movie_id = movies.id inner join stars on stars_in_movies.star_id = stars.id inner join genres_in_movies on movies.id = genres_in_movies.movie_id inner join genres on genres_in_movies.genre_id = genres.id group by movies.title order by " + sort + " " + order+" limit " + offset + ", " + perPage;
+					query = "select *  from movies  where movies.title like '" +alpha+"%' order by " + sort + " " + order+" limit " + offset + ", " + perPage;
 				Statement statement2 = dbcon.createStatement();
 				System.out.println("created second statement");
 				ResultSet result2 = statement2.executeQuery(query);
@@ -163,6 +162,7 @@ public class browseItem extends HttpServlet {
 				request.setAttribute("list2", movieList);
 				request.setAttribute("sort", sort);
 				request.setAttribute("order", order);
+				request.setAttribute("alpha", alpha);
 				RequestDispatcher rd = request.getRequestDispatcher("../browse.jsp");
 				rd.include(request, response);
 			}

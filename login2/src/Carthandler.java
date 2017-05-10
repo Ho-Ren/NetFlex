@@ -1,5 +1,3 @@
-
-
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -41,49 +39,71 @@ public class Carthandler extends HttpServlet {
 		String updateCart = request.getParameter("updatecart");
 		HttpSession session = request.getSession();
 		cart cart = (cart) session.getAttribute("cartsession");
-		//makes sure the list has movieName
-		String movieName = request.getParameter("moviename");
-		System.out.println("TITLE" + movieName);
+		//makes sure the list has MovieForCartName
+		String moviename = request.getParameter("moviename");
+		System.out.println("TITLE" + moviename);
 		try {
 			System.out.println("IN CARTHANDLER");
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-	        Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "");
-	        ResultSet set = (ResultSet) Search.BrowseTitle(movieName, dbcon);
+	        Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
+	        ResultSet set = (ResultSet) Search.BrowseTitle(moviename, dbcon);
 	        set.last();
-	        System.out.println("BEFORE GETTING ALL RESULTS");
-	        String id = set.getString(1);
-	        String title = set.getString(2);
-	        String year = set.getString(3);
-	        String director = set.getString(4);
-	        String pic = set.getString(5);
-	        String trailer = set.getString(6);
-	        System.out.println("BEFORE MOVIE SET");
-	        Movie m = new Movie(id, title, year, director, pic, trailer);
-	        System.out.println(id + " " + title + " " + year + " " + director);
+	       
 				if(addToCart != null)
 				{
-					System.out.println("ADDING TO CART");
+					System.out.println("BEFORE GETTING ALL RESULTS");
+			        String id = set.getString(1);
+			        String title = set.getString(2);
+			        String year = set.getString(3);
+			        String director = set.getString(4);
+			        String pic = set.getString(5);
+			        String trailer = set.getString(6);        
+			        System.out.println("BEFORE MovieForCart SET");
+			        MovieForCart m = new MovieForCart(id, title, year, director, pic, trailer);
+			        System.out.println(id + " " + title + " " + year + " " + director + " " + pic +" " + trailer);
+					System.out.println(m.getDirector());
+					
 					cart.addToCart(m);
 				}
 				else if(deleteFromCart != null)
 				{
+					 System.out.println("BEFORE GETTING ALL RESULTS");
+			        String id = set.getString(1);
+			        String title = set.getString(2);
+			        String year = set.getString(3);
+			        String director = set.getString(4);
+			        String pic = set.getString(5);
+			        String trailer = set.getString(6);        
+			        System.out.println("BEFORE MovieForCart SET");
+			        MovieForCart m = new MovieForCart(id, title, year, director, pic, trailer);
+			        System.out.println(id + " " + title + " " + year + " " + director + " " + pic +" " + trailer);
 					cart.deleteFromCart(m);
-					System.out.println("Deleting " + m.getTitle() + "from cart");
 				}
 				else if(updateCart != null)
 				{
+					System.out.println("BEFORE GETTING ALL RESULTS");
+			        String id = set.getString(1);
+			        String title = set.getString(2);
+			        String year = set.getString(3);
+			        String director = set.getString(4);
+			        String pic = set.getString(5);
+			        String trailer = set.getString(6);        
+			        System.out.println("BEFORE MovieForCart SET");
+			        MovieForCart m = new MovieForCart(id, title, year, director, pic, trailer);
+			        System.out.println(id + " " + title + " " + year + " " + director + " " + pic +" " + trailer);
 					int quantity = Integer.parseInt(request.getParameter("quantity"));
 					cart.updateQuantity(m, quantity);
 				}
 			session.setAttribute("cartsession", cart);
 			
 			cart updatedCart = (cart) session.getAttribute("cartsession");
-			ArrayList<Movie> movieList = new ArrayList<Movie>();
-			for(Entry<String, Movie> entry : updatedCart.cart.entrySet())
+			ArrayList<MovieForCart> movieList = new ArrayList<MovieForCart>();
+			for(Entry<String, MovieForCart> entry : updatedCart.cart.entrySet())
 			{
+				System.out.println("entry: " + entry.getValue().getTitle());
 				movieList.add(entry.getValue());
 			}
-			//System.out.println(movieList.get(0));
+//			System.out.println(movieList.get(0));
             request.setAttribute("movieList",movieList);
             RequestDispatcher rd=request.getRequestDispatcher("/cart.jsp");  
             rd.include(request,response); 

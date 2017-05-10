@@ -27,12 +27,13 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
     </button>
     <a class="navbar-brand" href="/login2/welcome.jsp">Home</a>
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-    <div class="col-sm-6 col-md-6 ">
+<!--     <div class="col-sm-6 col-md-6 ">
      <form class="navbar-form" role="search">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
@@ -41,45 +42,46 @@
             </div>
         </div>
         </form>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login2/servlet/Carthandler">Cart</a></li>
       <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
-      <li><a href="/login2/servlet/browseItem?param=title">Title</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a href="/login2/forTitle.jsp">Title</a></li>
+      <li><a href="/login2/index.html">Sign Out</a></li>
     </ul>
     
   </div>
 </nav>
 
 <div class="container">
-<div class="row">
-<form action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&perPage=${perPage}&order=${order}" method="post" >
-   <label>Sort By:</label>
-    <select name="sort" >
+<form class="form-inline" style ="margin: 10px;" action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&alpha=${alpha}&perPage=${perPage}&order=${order}" method="post" >
+   <label style ="width: 120px;">Sort By:</label>
+    <select class="form-control" name="sort" >
         <option value="title">Title</option>
         <option value="year">Year</option>
     </select>
-    <input type="submit" />
+    <input class="btn btn-default" type="submit"/>
 </form>
-<form action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&sort=${sort}&perPage=${perPage}" method="post" >
-   <label>Order by:</label>
-    <select name="order" >
+<form  class="form-inline" style ="margin: 10px;" action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&alpha=${alpha}&sort=${sort}&perPage=${perPage}" method="post" >
+   <label  style ="width: 120px;">Order by:</label>
+    <select class="form-control" name="order" >
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
     </select>
-    <input type="submit" />
+    <input class="btn btn-default" type="submit"/>
 </form> 
-<form action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&sort=${sort}&order=${order}" method="post" >
-   <label>Item per page:</label>
-    <select name="perPage" >
+<form  class="form-inline" style ="margin: 10px;" action="/login2/servlet/browseItem?param=${value}&genreName=${genreName}&alpha=${alpha}&sort=${sort}&order=${order}" method="post" >
+   <label  style ="width: 120px;">Item per page:</label>
+    <select class="form-control" name="perPage" >
         <option value="10">10</option>
         <option value="15">15</option>
         <option value="20">20</option>
         <option value="25">25</option>
     </select>
-    <input type="submit" />
+    <input class="btn btn-default" type="submit"/>
 </form> 
 </div>
+<hr/>
 <c:forEach items="${list2}" var="mlist">
 <div class="container">
 <div class="row">
@@ -98,7 +100,7 @@
     <h4>Year: ${mlist.y}</h4>
     <h4>Genres: 
         <span><c:forEach items="${mlist.genreList}" var="genre">
-            <span class="space"><span class=blueBkgr>${genre}</span></span>
+            <span class="space"><span class= "blueBkgr">${genre}</span></span>
         </c:forEach></span>
     </h4>
     <h4>Stars: 
@@ -111,32 +113,25 @@
   
   <!-- Shopping Cart Button -->
   <div class = "col-md-8">
-    <a href ="#">
-      <button type="button" class="btn btn-info btn-sm">
-        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add To Cart
-      </button>
-    </a>
+    <form id="login-form" 
+        ACTION="/login2/servlet/Carthandler" METHOD="POST">
+          <input type="hidden" name="moviename" value="${mlist.title}"/>
+            <button type="submit" class="btn btn-info btn-sm rightSpace" name="addtocart" ><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart</button>
+    </form>
   </div>
  </div>
  </div>
 </c:forEach>
+
 <!-- Pagination -->
 <div class ="container">
 <ul class="pagination">
-	<c:if test="${param.page gt 1}">
-		<li><a href='/login2/servlet/browseItem?param=${value}&page=${param.page-1}&sort=${sort}&genreName=${genreName}'>Previous</a></li>
-	</c:if>
-	
-	<c:forEach begin="1" end="${pageNum}" varStatus="loop">
-		<c:if test="${pageNum gt 1}">
-	    	<li><a href="/login2/servlet/browseItem?param=${value}&page=${loop.count}&sort=${sort}&genreName=${genreName}">${loop.count}</a></li>
-	   	</c:if>
-	</c:forEach>
-	
-	<c:if test="${param.page lt pageNum}">
-		<li><a href="/login2/servlet/browseItem?param=${value}&page=${param.page+1}&sort=${sort}&genreName=${genreName}">Next</a></li>
-	</c:if>
+<c:forEach begin="1" end="${pageNum}" varStatus="loop">
+  <li><a href="/login2/servlet/browseItem?param=${value}&page=${loop.count}&sort=${sort}&genreName=${genreName}&alpha=${alpha}&perPage=${perPage}&order=${order}">${loop.count}</a></li>
+</c:forEach>
 </ul>
 </div>
 </body>
 </html>
+
+

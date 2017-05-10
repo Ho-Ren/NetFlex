@@ -34,7 +34,7 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-    <div class="col-sm-6 col-md-6 ">
+   <!--  <div class="col-sm-6 col-md-6 ">
      <form class="navbar-form" role="search">
         <div class="input-group">
             <input type="text" class="form-control" placeholder="Search" name="q">
@@ -43,11 +43,12 @@
             </div>
         </div>
         </form>
-    </div>
+    </div> -->
     <ul class="nav navbar-nav navbar-right">
+      <li><a href="/login2/servlet/Carthandler">Cart</a></li>
       <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
-      <li><a href="/login2/servlet/browseItem?param=title">Title</a></li>
-      <li><a href="#">Sign Out</a></li>
+      <li><a href="/login2/forTitle.jsp">Title</a></li>
+      <li><a href="/login2/index.html">Sign Out</a></li>
     </ul>
     
   </div>
@@ -56,10 +57,12 @@
 
 <div class="container">
 <div class="row">
+	<h3>Search by Genre</h3>
+  <hr/>
   <c:forEach items="${list}" var= "gList">
   <div class ="col-md-3 col-sm-4 col-xs-6">
   <div class ="category" style="padding: 10px;">
-    <a href="/login2/servlet/browseItem?param=genre&genreName=${gList}&r=12">${gList}</a>   
+    <a href="/login2/servlet/browseItem?param=genre&genreName=${gList}">${gList}</a>   
   </div>
   </div>
   </c:forEach>
