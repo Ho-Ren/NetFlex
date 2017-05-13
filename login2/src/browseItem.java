@@ -58,7 +58,7 @@ public class browseItem extends HttpServlet {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
+			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","test", "1234");
 			Statement statement = dbcon.createStatement();
 			String query;
 			System.out.println("this is working(connection)");
@@ -82,7 +82,7 @@ public class browseItem extends HttpServlet {
 				if (genreName != null){
 					//create query for browse by genre to get number of pages for pagination
 					query = "select * from genres_in_movies inner join movies on movies.id = genres_in_movies.movie_id and genres_in_movies.genre_id = (select id from genres where name = '"
-							+ genreName + "') ORDER BY MOVIES.TITLE";
+							+ genreName + "') ";
 					value ="genre";
 					}
 				else{
@@ -108,10 +108,10 @@ public class browseItem extends HttpServlet {
 				}
 
 				System.out.println("page: " + offset);
-				if (genreName != null){   //create query for browse by genre
-					query = "select * from movies inner join " +  
-							"genres_in_movies where movies.id =  genres_in_movies.movie_id and genres_in_movies.genre_id = (select id from genres where genres.name = '" + genreName +"') order by " 
-							 + sort + " " + order + " limit " + offset + ", " + perPage;
+				if (genreName != null){   //create query for browse by genre  //select id from genres where genres.name = '" + genreName +"'
+					query = "select * from genres_in_movies inner join movies on movies.id = genres_in_movies.movie_id and genres_in_movies.genre_id = (select id from genres where name = '"
+							+ genreName + "') order by " + sort + " " + order+" limit " + offset + ", " + perPage;;
+					
 				}          
 				else                     //create query for browse by title
 					query = "select *  from movies  where movies.title like '" +alpha+"%' order by " + sort + " " + order+" limit " + offset + ", " + perPage;

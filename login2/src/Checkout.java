@@ -38,7 +38,7 @@ public class Checkout extends HttpServlet {
 		 try
          {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
+            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","test", "1234");
             
             //Get all information and check if cc info is correct.
             Statement statement = dbcon.createStatement();

@@ -31,7 +31,7 @@ public class TomcatForm extends HttpServlet
               //Class.forName("org.gjt.mm.mysql.Driver");
               Class.forName("com.mysql.jdbc.Driver").newInstance();
 
-              Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","root", "5555");
+              Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","test", "1234");
 //            		  loginUrl, loginUser, loginPasswd);
               // Declare our statement
               Statement statement = dbcon.createStatement();
