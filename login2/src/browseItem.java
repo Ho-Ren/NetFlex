@@ -58,7 +58,7 @@ public class browseItem extends HttpServlet {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false","test", "1234");
+			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw);
 			Statement statement = dbcon.createStatement();
 			String query;
 			System.out.println("this is working(connection)");
