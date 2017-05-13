@@ -58,6 +58,13 @@
     <description></description>
     <servlet-class>Checkout</servlet-class>
    </servlet>
+   
+   <servlet>
+   	<servlet-name>Carthandler</servlet-name>
+   	<display-name>Carthandler</display-name>
+   	<description></description>
+   	<servlet-class>Carthandler</servlet-class>
+   </servlet>
 
   <servlet-mapping>
     <servlet-name>TomcatFormServlet</servlet-name>
@@ -83,6 +90,12 @@
     <servlet-name>Checkout</servlet-name>
     <url-pattern>/servlet/Checkout</url-pattern>
   </servlet-mapping>
+  
+  <servlet-mapping>
+  	<servlet-name>Carthandler</servlet-name>
+  	<url-pattern>/servlet/Carthandler</url-pattern>
+  </servlet-mapping>
+  
   
 
 </web-app>
