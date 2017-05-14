@@ -32,10 +32,15 @@ public class TomcatForm extends HttpServlet
               Class.forName("com.mysql.jdbc.Driver").newInstance();
 
               Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw );
-//            		  loginUrl, loginUser, loginPasswd);
+              
+              //check recaptcha
+              String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+          	  boolean valid = VerifyUtils.verify(gRecaptchaResponse);
+//      	  System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
+//            System.out.println("valid = " + valid);
+          	  
               // Declare our statement
-              Statement statement = dbcon.createStatement();
-
+              Statement statement = dbcon.createStatement();    
               String pw = request.getParameter("pw");
               String email = request.getParameter("email");
               String query = "SELECT * from customers where password = '" + pw + "'" + "and email ='" + email +"'";
@@ -49,9 +54,13 @@ public class TomcatForm extends HttpServlet
                   RequestDispatcher rd=request.getRequestDispatcher("../index.html");  
                   rd.include(request,response);  
               }
-              else{
+              else if (!valid) {
+            	  out.print("<p style=\"color:red\">Invalid recaptcha, please try again</p>");  
+                  RequestDispatcher rd=request.getRequestDispatcher("../index.html");  
+                  rd.include(request,response); 
+              }
               // Perform the query
-            
+              else{
               ResultSet rs = statement.executeQuery(query);
               String name = null;
               int customerID = 961;
