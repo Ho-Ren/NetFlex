@@ -58,13 +58,25 @@
     <description></description>
     <servlet-class>Checkout</servlet-class>
    </servlet>
-   
    <servlet>
    	<servlet-name>Carthandler</servlet-name>
    	<display-name>Carthandler</display-name>
    	<description></description>
    	<servlet-class>Carthandler</servlet-class>
    </servlet>
+   <servlet>
+   <servlet-name>AdminLogin</servlet-name>
+    <servlet-class>AdminLogin</servlet-class>
+  </servlet>
+  <servlet>
+   <servlet-name>Metadata</servlet-name>
+    <servlet-class>Metadata</servlet-class>
+  </servlet>
+  <servlet>
+   <servlet-name>newStar</servlet-name>
+    <servlet-class>newStar</servlet-class>
+  </servlet>
+
 
   <servlet-mapping>
     <servlet-name>TomcatFormServlet</servlet-name>
@@ -95,7 +107,19 @@
   	<servlet-name>Carthandler</servlet-name>
   	<url-pattern>/servlet/Carthandler</url-pattern>
   </servlet-mapping>
-  
+  <servlet-mapping>
+    <servlet-name>AdminLogin</servlet-name>
+    <url-pattern>/servlet/AdminLogin</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>Metadata</servlet-name>
+    <url-pattern>/servlet/Metadata</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>newStar</servlet-name>
+    <url-pattern>/servlet/newStar</url-pattern>
+  </servlet-mapping>
   
 
 </web-app>
+
