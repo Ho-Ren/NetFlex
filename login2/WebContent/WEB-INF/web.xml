@@ -76,7 +76,10 @@
    <servlet-name>newStar</servlet-name>
     <servlet-class>newStar</servlet-class>
   </servlet>
-
+  <servlet>
+   <servlet-name>updateMovie</servlet-name>
+    <servlet-class>updateMovie</servlet-class>
+  </servlet>
 
   <servlet-mapping>
     <servlet-name>TomcatFormServlet</servlet-name>
@@ -119,7 +122,10 @@
     <servlet-name>newStar</servlet-name>
     <url-pattern>/servlet/newStar</url-pattern>
   </servlet-mapping>
-  
+    <servlet-mapping>
+    <servlet-name>updateMovie</servlet-name>
+    <url-pattern>/servlet/updateMovie</url-pattern>
+  </servlet-mapping>
 
 </web-app>
 

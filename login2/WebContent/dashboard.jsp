@@ -48,26 +48,27 @@
   	<div class = "row">
   	<div class = "col-md-4 col-sm-6 box">
   	<div>
-  	 <h2>New Star</h2>
-  	 <a href="/login2/newStar.jsp"> <h4> Add New Star</h4></a>
-  	</div>
-  	</div>
-  	<div class = "col-md-4 col-sm-6 box">
-  	<div>
   	<h2> Metadata </h2>	
   	 <a href="/login2/servlet/Metadata"><h4> MetaData</h4></a>
   	</div>
   	</div>	
   	<div class = "col-md-4 col-sm-6 box">
   	<div>
-  	<h2> Search </h2>	
-  	 <a href="/login2/"><h4> Advanced Search</h4></a>
+  	 <h2>New Star</h2>
+  	 <a href="/login2/newStar.jsp"> <h4> Add New Star</h4></a>
+  	</div>
+  	</div>
+  	
+  	<div class = "col-md-4 col-sm-6 box">
+  	<div>
+  	<h2> Update Movie </h2>	
+  	 <a href="/login2/addMovie.jsp"><h4> Update Movie</h4></a>
   	</div>
   	</div>	
   	<div class = "col-md-4 col-sm-6 box">
   	<div>
-  	<h2> Add Movie </h2>	
-  	 <a href="/login2/"><h4> Add Movie</h4></a>
+  	<h2> Add New Movie </h2>	
+  	 <a href="/login2/newMovie.jsp"><h4> Add New Movie</h4></a>
   	</div>
   	</div>	
   	</div>
