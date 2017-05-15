@@ -21,6 +21,7 @@
 
 <web-app>
 
+
     <display-name>Test Tomcat Connection to MySQL DB</display-name>
     <description>
       Test Tomcat Connection to mySQL DB
@@ -126,6 +127,16 @@
     <servlet-name>updateMovie</servlet-name>
     <url-pattern>/servlet/updateMovie</url-pattern>
   </servlet-mapping>
+
+<security-constraint>
+ <web-resource-collection>
+    <web-resource-name>HTTPSOnly</web-resource-name>
+    <url-pattern>/*</url-pattern>
+ </web-resource-collection>
+ <user-data-constraint>
+    <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+ </user-data-constraint>
+</security-constraint>
 
 </web-app>
 
