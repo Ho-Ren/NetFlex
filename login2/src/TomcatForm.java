@@ -37,7 +37,7 @@ public class TomcatForm extends HttpServlet
               String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
           	  boolean valid = VerifyUtils.verify(gRecaptchaResponse);
 //      	  System.out.println("gRecaptchaResponse=" + gRecaptchaResponse);
-//            System.out.println("valid = " + valid);
+	            System.out.println("valid = " + valid);
           	  
               // Declare our statement
               Statement statement = dbcon.createStatement();    
@@ -55,7 +55,9 @@ public class TomcatForm extends HttpServlet
                   rd.include(request,response);  
               }
               else if (!valid) {
-            	  out.print("<p style=\"color:red\">Invalid recaptcha, please try again</p>");  
+            	  out.print("<p style=\"color:red\">Invalid recaptcha, please try again</p>");
+//            	  out.print("<p style=\"color:red\">RECAPTCHA </p>" + gRecaptchaResponse);
+            	  request.setAttribute("rec", gRecaptchaResponse);
                   RequestDispatcher rd=request.getRequestDispatcher("../index.html");  
                   rd.include(request,response); 
               }

@@ -1,4 +1,4 @@
-package xmlParse;
+package movieParse;
 import java.util.ArrayList;
 
 public class PMovie {
@@ -30,12 +30,19 @@ public class PMovie {
 	}
 
 	public String getDirector() {
+		if (director == null){
+			this.director ="";
+		}
 		return director;
 	}
 
 	public void setDirector(String director) {
+		if (director == null){
+			this.director ="";
+		}
+		else{
 		this.director = director;
-	}
+	}}
 
 	public String getTitle() {
 		return title;
@@ -46,6 +53,12 @@ public class PMovie {
 	}
 
 	public String getYear() {
+		if(year.length()>4){
+			return year.substring(0, 4);
+		}
+		else if(year.length()<4 || year==null || year.equals(""))
+			return "1900";
+		else
 		return year;
 	}
 
