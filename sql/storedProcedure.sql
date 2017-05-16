@@ -47,7 +47,7 @@ DELIMITER ;
 DROP PROCEDURE if exists checkMovie;   -- return -1 if movie doesn't exit
 DELIMITER $$
 CREATE PROCEDURE checkMovie(
-	in title varchar(50),
+	in title varchar(100),
     in y year (4),
     out idNum int(11))
     Begin
@@ -64,7 +64,7 @@ CREATE PROCEDURE checkMovie(
     END$$
 DELIMITER ;
 
-DROP PROCEDURE if exists checkStarInMovie;   --  create relationship if there's not one add it
+DROP PROCEDURE if exists checkStarInMovie;   --  create relationship if there's not one, add it
 DELIMITER $$
 CREATE PROCEDURE checkStarInMovie(
 	 in starID int(11),
@@ -96,7 +96,7 @@ CREATE PROCEDURE checkGenreInMovie(
     from genres_in_movies  
     where genres_in_movies.genre_id = genreID and genres_in_movies.movie_id=movieID;
     set result = 0;
-    if rowCount < 0 then 
+    if rowCount = 0 then 
      insert  into  genres_in_movies values(genreID, movieID);
      set result = 1;
     END IF;
