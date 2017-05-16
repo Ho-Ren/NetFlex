@@ -83,10 +83,8 @@ public class actorParser extends DefaultHandler{
 
 	        } else if (qName.equalsIgnoreCase("stagename")) {
 	        	String[] tokens = tempVal.split("[ ]+",2);
-	        	if(tokens.length>=2){
-	   
+	        	if(tokens.length>=2){  
 	        		actTemp.setFirst(tokens[0]);
-	        		
 	        		actTemp.setLast(tokens[1]);
 	        	}
 	        	else if(tokens.length==1){
