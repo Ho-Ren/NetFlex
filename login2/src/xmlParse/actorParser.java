@@ -106,6 +106,7 @@ public class actorParser extends DefaultHandler{
 	        	}
 	        	catch (NumberFormatException e ){
 	        		tempVal= null;
+	        		System.out.println("Invalid year, set year as null");
 	        	}
 	        	actTemp.setDob(tempVal);
 	        } 
