@@ -1,9 +1,9 @@
 class MyConstants {
 	
 	//Enter your own site_key and secret key
-    public static final String SITE_KEY ="6Lf0OiEUAAAAACApcyMzFLdM9iZ-PZ4km_KY23tS";
+    public static final String SITE_KEY ="6LdNYSEUAAAAAOnY83kMAoAyHCFTOj4Iv6Tkcp4B";
 
-    public static final String SECRET_KEY ="6Lf0OiEUAAAAAJDhTFlrO5BNB-ZwO7gfJafETCp2";
+    public static final String SECRET_KEY ="6LdNYSEUAAAAAJrg358_K3PeMI8JHCjWwDRkUphb";
 
 }
 
