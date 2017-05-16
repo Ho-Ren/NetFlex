@@ -180,7 +180,7 @@ public class Castsparse extends DefaultHandler {
 		        	System.out.println(myStars.get(i).toString());
 					pstmt2.setInt(1, mID);
 					pstmt2.setInt(2, sID);
-					pstmt2.executeUpdate();
+					pstmt2.executeUpdate(); 
 		     }
 		    }
     	catch (SQLException ex) {
