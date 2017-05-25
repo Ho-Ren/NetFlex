@@ -81,7 +81,16 @@
    <servlet-name>updateMovie</servlet-name>
     <servlet-class>updateMovie</servlet-class>
   </servlet>
+    <servlet>
+   <servlet-name>AjaxTest</servlet-name>
+    <servlet-class>AjaxTest</servlet-class>
+  </servlet>
+  
 
+<servlet-mapping>
+    <servlet-name>AjaxTest</servlet-name>
+    <url-pattern>/servlet/AjaxTest</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>TomcatFormServlet</servlet-name>
     <url-pattern>/servlet/TomcatForm</url-pattern>
@@ -106,7 +115,7 @@
     <servlet-name>Checkout</servlet-name>
     <url-pattern>/servlet/Checkout</url-pattern>
   </servlet-mapping>
-  
+
   <servlet-mapping>
   	<servlet-name>Carthandler</servlet-name>
   	<url-pattern>/servlet/Carthandler</url-pattern>

@@ -56,15 +56,27 @@ public class Results extends HttpServlet {
 		}
 		
         
-        if(request.getParameter("Title") != null && request.getParameter("Director") != null)
+        if(request.getParameter("Title") != null || request.getParameter("Director") != null)
         {
     		title = request.getParameter("Title");
+    		title+="%";
     		year = request.getParameter("Year");
+    		if (year == null)
+    			year ="";
     		director = request.getParameter("Director");
+    		if (director == null){
+    			director ="";
+    		}
     		lastname = request.getParameter("Lastname");
+    		if (lastname == null){
+    			lastname ="";
+    		}
     		firstname = request.getParameter("Firstname");
+    		if(firstname == null){
+    			firstname ="";
+    		}
         }
-        
+       
 		System.out.println("title: " + title +" First: " + firstname + " Last:" + lastname + " Director:" + director);
         try
         {
@@ -76,7 +88,7 @@ public class Results extends HttpServlet {
             
             if(!title.equals(""))
             {
-                query+= "movies.title = '" + title + "' AND ";
+                query+= "movies.title like '" + title + "' AND ";
             }
             if(!year.equals(""))
             {

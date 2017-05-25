@@ -12,14 +12,38 @@
   <title>NetFlex</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src ="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="/login2/CSS/welcome.css" />
   
   </head>
   
 <body>
+<script type="text/javascript">
+$( function() {
+ $( "#ajaxDiv" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax( {
+          url : '/login2/servlet/AjaxTest',
+          dataType: "json",
+          data: "Title="+request.term,
+          success: function( data ) {
+        	  console.log(data);
+            response( data );
+          }
+        } );
+      },
+      minLength: 2,
+      /* select: function( event, ui ) {
+        log( "Selected: " + ui.item.value + " aka " + ui.item.id );
+      } */
+    } );
+  } );
+</script>
+
 <nav class="navbar navbar-default" role="navigation">
   <!-- Brand and toggle get grouped for better mobile display -->
   <div class="navbar-header">
@@ -33,16 +57,17 @@
   </div>
 
   <div class="collapse navbar-collapse" id="navitem">
-   <!--  <div class="col-sm-6 col-md-6 ">
+   <div class="col-sm-6 col-md-6 ">
      <form class="navbar-form" role="search" action="/login2/servlet/Results" method="get">
         <div class="input-group">
-            <input type="text" class="form-control" name="Title" placeholder="Enter Movie Title">
+            <input type="text" id ="ajaxDiv" class="form-control" name="Title" placeholder="Enter Movie Title">
+            
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit">Search</button>
             </div>
         </div>
         </form>
-    </div> -->
+    </div> 
     <ul class="nav navbar-nav navbar-right">
       <li><a href="/login2/servlet/Carthandler">Cart</a></li>
       <li><a href="/login2/servlet/browseItem?param=genre">Genre</a></li>
