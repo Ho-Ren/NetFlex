@@ -9,6 +9,7 @@ public class Movie {
 	private ArrayList<Star> stars;
 	private ArrayList<String> genreList;
 	private ArrayList<Star> starList;
+	private ArrayList<String> ListofStar;
 	private String trailer;
 	private String pic;
 	private int y;
@@ -60,6 +61,17 @@ public class Movie {
 	        this.starsString = s;
 	        this.quantity = 1;
 	    }
+	 Movie(String ID, String  TITLE, String YEAR, String DIRECTOR, String BANNER, String Trailer, ArrayList<String> genreList, ArrayList <String> starList){
+		 this.ID = ID;
+		 this.title = TITLE;
+		 this.year = YEAR;
+		 this.director = DIRECTOR;
+		 this.pic = BANNER;
+		 this.trailer = Trailer;
+		 this.ListofStar = starList;
+		 this.genreList =genreList;
+		 this.quantity = 1;
+	 }
 	 
 	public String getStarsString(){
 		return starsString;
@@ -70,7 +82,9 @@ public class Movie {
 	public ArrayList<Star> getStarList(){
 		return starList;
 	}
-	
+	public ArrayList<String> getListofStar(){
+		return ListofStar;
+	}
 	public ArrayList<String> getGenreList(){
 		return genreList;
 	}

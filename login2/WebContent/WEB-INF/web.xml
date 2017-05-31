@@ -85,8 +85,16 @@
    <servlet-name>AjaxTest</servlet-name>
     <servlet-class>AjaxTest</servlet-class>
   </servlet>
-  
+  <servlet>
+  <servlet-name>getMovieInfo</servlet-name>
+    <servlet-class>getMovieInfo</servlet-class>
+  </servlet>
 
+
+<servlet-mapping>
+    <servlet-name>getMovieInfo</servlet-name>
+    <url-pattern>/servlet/getMovieInfo</url-pattern>
+  </servlet-mapping>
 <servlet-mapping>
     <servlet-name>AjaxTest</servlet-name>
     <url-pattern>/servlet/AjaxTest</url-pattern>
