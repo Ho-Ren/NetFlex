@@ -25,11 +25,13 @@ public class getMovieInfo extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw);
-			Statement st = dbcon.createStatement();
             System.out.println("i got ajax call from qtip");
 			if(input.length()>3){
-				String query = "select * from movies where title = '"+input+"'";
-				ResultSet rs = st.executeQuery(query);
+				String query = "select * from movies where title = ?";
+				PreparedStatement stmt = dbcon.prepareStatement(query);
+				stmt.setString(1,input );
+				ResultSet rs = stmt.executeQuery();
+	/*			ResultSet rs = st.executeQuery(query);*/
 				while (rs.next()){
 					movieId = rs.getString(1);
 					movieTitle = rs.getString(2);
@@ -38,14 +40,18 @@ public class getMovieInfo extends HttpServlet {
 					banner = rs.getString(5);
 					trailer = rs.getString(6);				
 				}	
-				query = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = " +movieId;
-            	ResultSet resultGenre = st.executeQuery(query);
+				query = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = ?";
+				PreparedStatement stmt2 = dbcon.prepareStatement(query);
+				stmt2.setString(1,movieId );
+				ResultSet resultGenre = stmt2.executeQuery();
             	while (resultGenre.next())
                  {	
                  	genreList.add(resultGenre.getString(1));
                  }
-            	query ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id=" + movieId;
-            	ResultSet resultStar = st.executeQuery(query);
+            	query ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id= ?";
+            	PreparedStatement stmt3 = dbcon.prepareStatement(query);
+				stmt3.setString(1,movieId );
+            	ResultSet resultStar = stmt3.executeQuery();
             	 while(resultStar.next())
                  {	
                  	String fullName = resultStar.getString(1) + " " + resultStar.getString(2);

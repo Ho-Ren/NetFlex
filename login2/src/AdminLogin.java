@@ -36,12 +36,14 @@ public class AdminLogin extends HttpServlet
 
           	  
               // Declare our statement
-              Statement statement = dbcon.createStatement();    
+              Statement statement = dbcon.createStatement();   
               String pw = request.getParameter("pw");
               String email = request.getParameter("email");
-              String query = "SELECT * from employees where password = '" + pw + "'" + "and email ='" + email +"'";
-
-              ResultSet rm = statement.executeQuery(query);
+              String query = "SELECT * from employees where password = ? and email = ?";
+              PreparedStatement pstmt = dbcon.prepareStatement(query);
+              pstmt.setString (1, pw);
+              pstmt.setString(2, email);
+              ResultSet rm= pstmt.executeQuery();
               rm.last();
               int count = rm.getRow();
               System.out.println(count);
@@ -53,10 +55,10 @@ public class AdminLogin extends HttpServlet
          
               // Perform the query
               else{
-              ResultSet rs = statement.executeQuery(query);
+              rm.first();
               String name = null;
-              while (rs.next()){
-            	  name = rs.getString(3);
+              while (rm.next()){
+            	  name = rm.getString(3);
            
               }
               HttpSession session = request.getSession(true);
@@ -65,7 +67,7 @@ public class AdminLogin extends HttpServlet
 
               RequestDispatcher rd=request.getRequestDispatcher("../dashboard.jsp");  
               rd.include(request,response);
-              rs.close();
+              rm.close();
            }
               statement.close();
               dbcon.close();

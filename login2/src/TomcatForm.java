@@ -42,10 +42,12 @@ public class TomcatForm extends HttpServlet
               // Declare our statement
               Statement statement = dbcon.createStatement();    
               String pw = request.getParameter("pw");
-              String email = request.getParameter("email");
-              String query = "SELECT * from customers where password = '" + pw + "'" + "and email ='" + email +"'";
-
-              ResultSet rm = statement.executeQuery(query);
+              String email = request.getParameter("email");             
+              String query = "SELECT * from customers where password = ? and email = ?";
+              PreparedStatement pstmt = dbcon.prepareStatement(query);
+              pstmt.setString (1, pw);
+              pstmt.setString(2, email);
+              ResultSet rm = pstmt.executeQuery();
               rm.last();
               int count = rm.getRow();
               System.out.println(count);
@@ -63,12 +65,12 @@ public class TomcatForm extends HttpServlet
               }
               // Perform the query
               else{
-              ResultSet rs = statement.executeQuery(query);
+              rm.first();
               String name = null;
               int customerID = 961;
-              while (rs.next()){
-            	  name = rs.getString("first_name");
-            	  customerID = rs.getInt("id");
+              while (rm.next()){
+            	  name = rm.getString("first_name");
+            	  customerID = rm.getInt("id");
               }
               System.out.println("customer ID:" + customerID);
               HttpSession session = request.getSession(true);
@@ -78,7 +80,7 @@ public class TomcatForm extends HttpServlet
               session.setAttribute("customerID", customerID);
               RequestDispatcher rd=request.getRequestDispatcher("../welcome.jsp");  
               rd.include(request,response);
-              rs.close();
+              rm.close();
            }
               statement.close();
               dbcon.close();

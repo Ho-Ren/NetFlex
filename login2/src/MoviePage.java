@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,12 +36,13 @@ public class MoviePage extends HttpServlet{
         {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw);
-            Statement statement = dbcon.createStatement();
             System.out.println("this is working");
             
             //get all the info of the movie (store in item-->item)
-            String query = "select * from movies where id = " + id;
-        	ResultSet result = statement.executeQuery(query);
+            String query = "select * from movies where id = ?";
+            PreparedStatement stmt = dbcon.prepareStatement(query);
+			stmt.setInt(1,id );
+        	ResultSet result = stmt.executeQuery();
                 while(result.next())
                 {	
                 	String title = result.getString(2);
@@ -55,8 +57,10 @@ public class MoviePage extends HttpServlet{
                 
 //            	System.out.print("at genre");
             	//get the list of genres that the movie is in (store in  genre --> genre)
-                query = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = " +id;
-            	ResultSet resultGenre = statement.executeQuery(query);
+                query = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = ?";
+				PreparedStatement stmt2 = dbcon.prepareStatement(query);
+				stmt2.setInt(1,id );
+                ResultSet resultGenre = stmt2.executeQuery();
             	ArrayList<String> genre = new ArrayList<String>();
             	while (resultGenre.next())
                  {	
@@ -64,8 +68,10 @@ public class MoviePage extends HttpServlet{
                  }
             	 request.setAttribute("genre", genre);
             	 //get all the stars that are in the movie (store in: name --> star) 
-            	query ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id=" + id;
-            	ResultSet resultStar = statement.executeQuery(query);
+            	query ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id= ?";
+            	PreparedStatement stmt3 = dbcon.prepareStatement(query);
+				stmt3.setInt(1,id );
+            	ResultSet resultStar = stmt3.executeQuery();
             	ArrayList<Star> name = new ArrayList<Star>();
             	 while(resultStar.next())
                  {	

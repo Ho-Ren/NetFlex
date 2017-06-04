@@ -41,7 +41,8 @@ public class AjaxTest extends HttpServlet {
 			}
 			
 		 System.out.println(query);
-		ResultSet rs = st.executeQuery(query);
+		PreparedStatement stmt = dbcon.prepareStatement(query);
+		ResultSet rs =stmt.executeQuery();
 		while (rs.next()){
 			list.add(rs.getString(1));		
 //			System.out.println(rs.getString(1));

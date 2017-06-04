@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -55,8 +56,10 @@ public class StarPage extends HttpServlet{
                 
 //            	System.out.print("at genre");
             	//get the list of movie that the star is in (store in  movieList --> movieList)
-                query = "select * from stars_in_movies inner join movies on stars_in_movies.movie_id = movies.id and stars_in_movies.star_id= " +id;
-            	ResultSet resultMovie = statement.executeQuery(query);
+                query = "select * from stars_in_movies inner join movies on stars_in_movies.movie_id = movies.id and stars_in_movies.star_id= ?";
+            	PreparedStatement stmt = dbcon.prepareStatement(query);
+            	stmt.setInt(1, id);
+                ResultSet resultMovie = stmt.executeQuery();
             	ArrayList<Movie> movieList = new ArrayList<Movie>();
             	while (resultMovie.next())
                  {	

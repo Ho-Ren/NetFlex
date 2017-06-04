@@ -8,6 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.mysql.jdbc.PreparedStatement;
+
 import java.net.*;
 import java.sql.*;
 import java.text.*;
@@ -144,17 +147,19 @@ public class Results extends HttpServlet {
 				ArrayList<Star> starList = new ArrayList<Star>();
 				ArrayList<String> genreList2 = new ArrayList<String>();
 				
-				String query3 = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = " +id;
-				Statement stmt2 = dbcon.createStatement();
-				ResultSet resultGenre = stmt2.executeQuery(query3);
+				String query3 = "select genres.name from genres inner join genres_in_movies on genres.id = genres_in_movies.genre_id where genres_in_movies.movie_id = " +id ;
+				java.sql.PreparedStatement stmt2 = dbcon.prepareStatement(query3);
+				ResultSet resultGenre = stmt2.executeQuery();
 				
 				while (resultGenre.next())
                  {	
                  	genreList2.add(resultGenre.getString(1));
                  }
 				// For adding stars, genres to a new Movie() object:
-            	query3 ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id=" + id;
-            	ResultSet resultStar = stmt2.executeQuery(query3);
+            	query3 ="SELECT stars.first_name, stars.last_name, stars.id FROM stars INNER JOIN stars_in_movies ON stars.id = stars_in_movies.star_id WHERE stars_in_movies.movie_id= " +id;
+            	java.sql.PreparedStatement stmt3 = dbcon.prepareStatement(query3);
+			/*	stmt3.setInt(1, id);*/	
+            	ResultSet resultStar = stmt3.executeQuery(query3);
             	 while(resultStar.next())
                  {	
             		String starid = resultStar.getString(3);
