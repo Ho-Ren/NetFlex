@@ -1,13 +1,18 @@
 
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -35,7 +40,8 @@ public class Results extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-        String title, year, director, firstname, lastname;
+		long startTimeTX = System.nanoTime();
+		String title, year, director, firstname, lastname;
         title = "";
         year = "";
         director = "";
@@ -83,8 +89,26 @@ public class Results extends HttpServlet {
 		System.out.println("title: " + title +" First: " + firstname + " Last:" + lastname + " Director:" + director);
         try
         {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw);
+        	 Context initCtx = new InitialContext();
+             if (initCtx == null)
+                 out.println("initCtx is NULL");
+
+             Context envCtx = (Context) initCtx.lookup("java:comp/env");
+             if (envCtx == null)
+                 out.println("envCtx is NULL");
+
+             // Look up our data source
+             DataSource ds = (DataSource) envCtx.lookup("jdbc/TestDB");
+             if (ds == null)
+                 out.println("ds is null.");
+
+             Connection dbcon = ds.getConnection();
+             if (dbcon == null)
+                 out.println("dbcon is null.");
+//
+//            Class.forName("com.mysql.jdbc.Driver").newInstance();
+//            Connection dbcon = DriverManager.getConnection("jdbc:mysql:///moviedb?autoReconnect=true&useSSL=false", Globals.un, Globals.pw);
+            long startTimeTJ = System.nanoTime();
             Statement statement = dbcon.createStatement();
             System.out.println("this is not working");
             String query = "SELECT * from movies, stars_in_movies, stars WHERE ";
@@ -116,7 +140,8 @@ public class Results extends HttpServlet {
          
             System.out.println(query);
             System.out.println("perPage" + perPage);
-            ResultSet result = statement.executeQuery(query);
+            java.sql.PreparedStatement stmt = dbcon.prepareStatement(query);
+            ResultSet result = stmt.executeQuery();
 			result.last();
 			int total = result.getRow();
 			System.out.println("totalRow: " + total);
@@ -166,8 +191,9 @@ public class Results extends HttpServlet {
                  	String fullName = resultStar.getString(1) + " " + resultStar.getString(2);	                 	
                  	starList.add(new Star(starid, fullName));
                  }
-
-
+            	 long endTimeTJ = System.nanoTime();
+                 long elapsedTJ = endTimeTJ - startTimeTJ;
+                 writeFile("ResultTJ.txt", elapsedTJ);
 				movieList.add(new Movie(id,title2,year2, director2, pic, url, genreList2, starList));
             }
             request.setAttribute("movieList",movieList);
@@ -197,7 +223,11 @@ public class Results extends HttpServlet {
                           ex.getMessage() + "</P></BODY></HTML>");
               return;
           }
-
+        long endTimeTX = System.nanoTime();
+        long elapsedTX = endTimeTX - startTimeTX;   //total amount of time in the entire servlet
+        
+        writeFile("ResultTX.txt", elapsedTX);
+       
 		
 	}
 
@@ -208,5 +238,17 @@ public class Results extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
+	 private void writeFile (String fileName, long time){
+
+		 try{
+		  File file = new File(fileName);
+	      file.createNewFile();
+		  FileWriter fw = new FileWriter(file, true);
+		  fw.write(new String(Long.toString(time) +" "));
+		  fw.close();
+				} catch (IOException e) {
+			}
+  }
 
 }
